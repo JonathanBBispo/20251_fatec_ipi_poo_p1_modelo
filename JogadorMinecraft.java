@@ -35,8 +35,10 @@ public class JogadorMinecraft {
     }
 
     public void levarDano() {
-        vida--;
-        System.out.println(nome + " levou dano! Vida atual: " + vida);
+        if(estaVivo()){
+            vida--;
+            System.out.println(nome + " levou dano! Vida atual: " + vida);
+        }
     }
 
     public boolean estaVivo() {
