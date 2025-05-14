@@ -13,6 +13,10 @@ public class JogadorMinecraft {
         this.inventario = new ArrayList<>();
     }
 
+    public String getNome() {
+        return nome;
+    }
+
     public void minerar() {
         System.out.println(nome + " está minerando...");
         blocosColetados++;
@@ -43,6 +47,11 @@ public class JogadorMinecraft {
 
     public boolean estaVivo() {
         return vida > 0;
+    }
+
+    public void ataque(JogadorMinecraft personagem){
+                System.out.print(nome + " atacou! ");
+                personagem.levarDano();
     }
 
     @Override
