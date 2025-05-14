@@ -34,9 +34,9 @@ public class JogoMinecraft {
                     break;
                 }
             }
-            if(sofrerDanos >= 0.25) personagem1.levarDano();
+            if(sofrerDanos <= 0.25) personagem1.levarDano();
             sofrerDanos = gerador.nextDouble();
-            if(sofrerDanos >= 0.25) personagem2.levarDano();
+            if(sofrerDanos <= 0.25) personagem2.levarDano();
             if(!personagem1.estaVivo() && !personagem2.estaVivo()){
                 System.out.println("GAME OVER");
                 return;
