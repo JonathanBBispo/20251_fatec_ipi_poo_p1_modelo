@@ -1,20 +1,23 @@
+package br.p2;
 import java.util.*;
+import lombok.*;
 
+@Getter
+@Setter
 public class JogadorMinecraft {
     private String nome;
     private int vida;
     private int blocosColetados;
     private List<String> inventario;
+    private int vitorias;
+    private int derrotas;
+    
 
     public JogadorMinecraft(String nome) {
         this.nome = nome;
         this.vida = 10;
         this.blocosColetados = 0;
         this.inventario = new ArrayList<>();
-    }
-
-    public String getNome() {
-        return nome;
     }
 
     public void minerar() {

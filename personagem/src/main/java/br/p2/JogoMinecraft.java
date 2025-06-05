@@ -1,3 +1,4 @@
+package br.p2;
 import java.util.Random;
 public class JogoMinecraft {
     public static void main(String[] args) throws Exception {
