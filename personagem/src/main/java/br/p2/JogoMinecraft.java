@@ -1,70 +1,60 @@
 package br.p2;
 import java.util.Random;
+import java.util.ArrayList;
 public class JogoMinecraft {
     public static void main(String[] args) throws Exception {
-        var personagem1 = new JogadorMinecraft("Dennis");
-        var personagem2 = new JogadorMinecraft("Steve Construtor");
+        var personagens = new ArrayList<JogadorMinecraft>();
+        try{
+            personagens = new JogadorMinecraftDAO().listar();
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Sistema indisponível");
+            return;
+        }
+
         var gerador = new Random();
+        var rounds = 1;
         
         while(true){
-            var sofrerDanos = gerador.nextDouble();
             var quemAtaca = 1 + gerador.nextInt(2);
-            
-            if(personagem1.estaVivo() && personagem2.estaVivo()){
+            System.out.printf("Round %d\n", rounds);
+            if(personagens.get(0).estaVivo() && personagens.get(1).estaVivo()){
                 switch (quemAtaca) {
                     case 1: 
-                        personagem1.ataque(personagem2);
+                        personagens.get(0).ataque(personagens.get(1));
                         break;
         
                     case 2:
-                        personagem2.ataque(personagem1);
+                        personagens.get(1).ataque(personagens.get(0));
                         break;
                 }
             }
+            for(int i=0; i < personagens.size(); i++){
+                if(personagens.get(i).estaVivo()){
+                    var oQueFazer = gerador.nextDouble();
+                    if(oQueFazer <= personagens.get(i).getProbColetar()) personagens.get(i).coletarMadeira();
+                    else if(oQueFazer <= (personagens.get(i).getProbColetar() + personagens.get(i).getProbMinerar())) personagens.get(i).minerar();
+                    else personagens.get(i).construir();
 
-            if(personagem1.estaVivo()) {
-                var oQueFazer = 1 + gerador.nextInt(3);
-                switch (oQueFazer) {
-                    case 1:
-                    personagem1.minerar();
-                    break;        
-                    case 2:
-                    personagem1.coletarMadeira();
-                    break;
-                    case 3:
-                    personagem1.construir();
-                    break;
+                    var sofrerDanos = gerador.nextDouble();
+                    if(sofrerDanos <= 0.25) personagens.get(i).levarDano();
                 }
-                if(sofrerDanos <= 0.25) personagem1.levarDano();
-            }
-            if(personagem2.estaVivo()){
-                var oQueFazer = 1 + gerador.nextInt(10);
-                switch (oQueFazer) {
-                    case 1, 2, 3, 4, 5, 6:
-                    personagem2.construir();
-                    break;
-                    case 7, 8, 9:
-                    personagem2.coletarMadeira();
-                    break;
-                    case 10:
-                    personagem2.minerar();
-                    break;
-                }
-                sofrerDanos = gerador.nextDouble();
-                if(sofrerDanos <= 0.25) personagem2.levarDano();
             }
 
-            if(personagem1.estaVivo() && !personagem2.estaVivo()) System.out.println(personagem1.getNome() + " é o vencedor!");
-            else if(!personagem1.estaVivo() && personagem2.estaVivo()) System.out.println(personagem2.getNome() + " é o vencedor!");
-            else if(!personagem1.estaVivo() && !personagem2.estaVivo()){
+
+            if(personagens.get(0).estaVivo() && !personagens.get(1).estaVivo()) System.out.println(personagens.get(0).getNome() + " é o vencedor!");
+            else if(!personagens.get(0).estaVivo() && personagens.get(1).estaVivo()) System.out.println(personagens.get(1).getNome() + " é o vencedor!");
+            else if(!personagens.get(0).estaVivo() && !personagens.get(1).estaVivo()){
                 System.out.println("GAME OVER");
                 return;
             }
 
-            if(personagem1.estaVivo()) System.out.println(personagem1);
-            if(personagem2.estaVivo()) System.out.println(personagem2);
+            for(int i =0; i < personagens.size(); i++)
+                if(personagens.get(i).estaVivo())
+                    System.out.println(personagens.get(i));
             System.out.println("============");
 
+            rounds++;
             Thread.sleep(5000);
         }
     }

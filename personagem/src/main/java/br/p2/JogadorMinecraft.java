@@ -4,14 +4,32 @@ import lombok.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class JogadorMinecraft {
+    private int codigo;
     private String nome;
     private int vida;
     private int blocosColetados;
     private List<String> inventario;
     private int vitorias;
     private int derrotas;
-    
+    private double probConstruir;
+    private double probColetar;
+    private double probMinerar;
+
+    public JogadorMinecraft(int codigo, String nome, int vitorias, int derrotas, double probConstruir, double probColetar, double probMinerar) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.vida = 10;
+        this.blocosColetados = 0;
+        this.inventario = new ArrayList<>();
+        this.vitorias = vitorias;
+        this.derrotas = derrotas;
+        this.probConstruir = probConstruir;
+        this.probColetar = probColetar;
+        this.probMinerar = probMinerar;
+    }
 
     public JogadorMinecraft(String nome) {
         this.nome = nome;
