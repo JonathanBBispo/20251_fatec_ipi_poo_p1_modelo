@@ -78,8 +78,8 @@ public class JogadorMinecraft {
     @Override
     public String toString() {
         return String.format(
-            "%s - Vida: %d, Blocos: %d, Inventário: %s",
-            nome, vida, blocosColetados, inventario
+            "%s - Vida: %d, Blocos: %d, Vitórias: %d, Derrotas: %d, Inventário: %s",
+            nome, vida, blocosColetados, vitorias, derrotas, inventario 
         );
     }
 }

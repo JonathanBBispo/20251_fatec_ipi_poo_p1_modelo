@@ -26,4 +26,15 @@ public class JogadorMinecraftDAO {
             return personagens;
         }
     }
+    public void atualizar(JogadorMinecraft personagem) throws Exception{
+        var sql = "UPDATE tb_personagem SET n_vitorias = ?, n_derrotas = ? WHERE cod_personagem = ?";
+
+        try(var conexao = ConnectionFactory.obterConexao();
+            var ps = conexao.prepareStatement(sql);){
+                ps.setInt(1, personagem.getVitorias());
+                ps.setInt(2, personagem.getDerrotas());
+                ps.setInt(3, personagem.getCodigo());
+                ps.execute();
+            }
+    }
 }

@@ -22,10 +22,36 @@ public class JogoMinecraft {
                 switch (quemAtaca) {
                     case 1: 
                         personagens.get(0).ataque(personagens.get(1));
+                        if(!personagens.get(1).estaVivo()){
+                            personagens.get(0).setVitorias(personagens.get(0).getVitorias() + 1);
+                            personagens.get(1).setDerrotas(personagens.get(1).getDerrotas() + 1);
+                            System.out.println(personagens.get(0).getNome() + " é o vencedor!");
+                            try{
+                                var dao = new JogadorMinecraftDAO();
+                                dao.atualizar(personagens.get(0));
+                                dao.atualizar(personagens.get(1));
+                            }catch(Exception e){
+                                e.printStackTrace();
+                                System.out.println("Sistema indisponível");
+                            }
+                        }
                         break;
         
                     case 2:
                         personagens.get(1).ataque(personagens.get(0));
+                        if(!personagens.get(0).estaVivo()){
+                            personagens.get(1).setVitorias(personagens.get(1).getVitorias() + 1);
+                            personagens.get(0).setDerrotas(personagens.get(0).getDerrotas() + 1);
+                            System.out.println(personagens.get(1).getNome() + " é o vencedor!");
+                            try{
+                                var dao = new JogadorMinecraftDAO();
+                                dao.atualizar(personagens.get(0));
+                                dao.atualizar(personagens.get(1));
+                            }catch(Exception e){
+                                e.printStackTrace();
+                                System.out.println("Sistema indisponível");
+                            }
+                        }
                         break;
                 }
             }
@@ -41,10 +67,7 @@ public class JogoMinecraft {
                 }
             }
 
-
-            if(personagens.get(0).estaVivo() && !personagens.get(1).estaVivo()) System.out.println(personagens.get(0).getNome() + " é o vencedor!");
-            else if(!personagens.get(0).estaVivo() && personagens.get(1).estaVivo()) System.out.println(personagens.get(1).getNome() + " é o vencedor!");
-            else if(!personagens.get(0).estaVivo() && !personagens.get(1).estaVivo()){
+            if(!personagens.get(0).estaVivo() && !personagens.get(1).estaVivo()){
                 System.out.println("GAME OVER");
                 return;
             }
