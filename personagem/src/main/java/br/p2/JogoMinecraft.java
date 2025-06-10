@@ -64,6 +64,18 @@ public class JogoMinecraft {
 
                     var sofrerDanos = gerador.nextDouble();
                     if(sofrerDanos <= 0.25) personagens.get(i).levarDano();
+
+                    personagens.get(i).setProbColetar(gerador.nextDouble());
+                    personagens.get(i).setProbMinerar(gerador.nextDouble(1.0 - personagens.get(i).getProbColetar()));
+                    personagens.get(i).setProbConstruir(1.0 - (personagens.get(i).getProbColetar() + personagens.get(i).getProbMinerar()));
+
+                    try{
+                        var dao = new JogadorMinecraftDAO();
+                        dao.atualizar(personagens.get(i));
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        System.out.println("Sistema indisponível");
+                    }
                 }
             }
 
